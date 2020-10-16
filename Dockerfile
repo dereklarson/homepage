@@ -8,4 +8,4 @@ RUN npm install
 RUN npm install -g gatsby-cli
 COPY . .
 
-CMD ["npm", "run", "serve"]
+CMD ["gatsby", "serve", "-H", "0.0.0.0"]
