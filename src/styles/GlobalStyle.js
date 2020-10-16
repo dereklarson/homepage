@@ -3,6 +3,9 @@ import Fonts from './fonts';
 import TransitionStyles from './TransitionStyles';
 import PrismStyles from './PrismStyles';
 
+// --green: #64ffda;
+const dlblue = '#2196F3';
+
 const GlobalStyle = createGlobalStyle`
   ${Fonts};
 
@@ -16,8 +19,8 @@ const GlobalStyle = createGlobalStyle`
     --light-slate: #a8b2d1;
     --lightest-slate: #ccd6f6;
     --white: #e6f1ff;
-    --green: #64ffda;
-    --green-tint: rgba(100, 255, 218, 0.1);
+    --primary: ${dlblue}
+    --primary-tint: rgba(100, 255, 218, 0.1);
 
     --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
@@ -192,7 +195,7 @@ const GlobalStyle = createGlobalStyle`
       counter-increment: section;
       content: '0' counter(section) '.';
       margin-right: 10px;
-      color: var(--green);
+      color: var(--primary);
       font-family: var(--font-mono);
       font-size: clamp(var(--fz-md), 3vw, var(--fz-xl));
       font-weight: 400;
@@ -256,7 +259,7 @@ const GlobalStyle = createGlobalStyle`
 
     &:hover,
     &:focus {
-      color: var(--green);
+      color: var(--primary);
     }
 
     &.inline-link {
@@ -320,14 +323,14 @@ const GlobalStyle = createGlobalStyle`
           content: '▹';
           position: absolute;
           left: 0;
-          color: var(--green);
+          color: var(--primary);
         }
       }
     }
   }
 
   blockquote {
-    border-left-color: var(--green);
+    border-left-color: var(--primary);
     border-left-style: solid;
     border-left-width: 1px;
     margin-left: 0px;
@@ -356,18 +359,18 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #logo {
-    color: var(--green);
+    color: var(--primary);
   }
 
   .overline {
-    color: var(--green);
+    color: var(--primary);
     font-family: var(--font-mono);
     font-size: var(--fz-md);
     font-weight: 400;
   }
 
   .subtitle {
-    color: var(--green);
+    color: var(--primary);
     margin: 0 0 20px 0;
     font-size: var(--fz-md);
     font-family: var(--font-mono);
@@ -390,7 +393,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     align-items: center;
     margin-bottom: 50px;
-    color: var(--green);
+    color: var(--primary);
 
     .arrow {
       display: block;

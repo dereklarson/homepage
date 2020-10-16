@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
-import { email } from '@config';
 import { navDelay, loaderDelay } from '@utils';
 
 const StyledHeroSection = styled.section`
@@ -12,7 +11,7 @@ const StyledHeroSection = styled.section`
 
   h1 {
     margin: 0 0 30px 4px;
-    color: var(--green);
+    color: var(--primary);
     font-family: var(--font-mono);
     font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
     font-weight: 400;
@@ -25,6 +24,7 @@ const StyledHeroSection = styled.section`
   h3 {
     margin-top: 10px;
     color: var(--slate);
+    font-size: 3vw;
     line-height: 0.9;
   }
 
@@ -47,22 +47,17 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Brittany Chiang.</h2>;
-  const three = <h3 className="big-heading">I build things for the web.</h3>;
+  const one = <h1>Welcome, my name is</h1>;
+  const two = <h2 className="big-heading">Derek Larson</h2>;
+  const three = <h3 className="big-heading">I seek, study, and showcase data</h3>;
   const four = (
     <p>
-      I'm a software engineer based in Boston, MA specializing in building (and occasionally
-      designing) exceptional websites, applications, and everything in between.
+      I'm a data scientist based in San Francisco with a broad set of skills ranging from science to
+      software.
     </p>
   );
-  const five = (
-    <a href={`mailto:${email}`} className="email-link">
-      Get In Touch
-    </a>
-  );
 
-  const items = [one, two, three, four, five];
+  const items = [one, two, three, four];
 
   return (
     <StyledHeroSection>

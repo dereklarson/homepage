@@ -6,6 +6,10 @@ package-lock.json
 
 # Build directory
 /public
+build
 .DS_Store
 
 .vscode/
+
+# Vim swap
+*.swp

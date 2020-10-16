@@ -1,26 +1,29 @@
 module.exports = {
-  email: 'brittany.chiang@gmail.com',
+  myName: 'Derek Larson',
+  mySite: 'https://dereklarson.info',
+  myTwitterUsername: 'd6damage',
+  email: 'larson.derek.a@gmail.com',
 
   socialMedia: [
     {
       name: 'GitHub',
-      url: 'https://github.com/bchiang7',
+      url: 'https://github.com/dereklarson',
     },
     {
       name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/bchiang7',
+      url: 'https://www.linkedin.com/in/derekalarson',
     },
     {
-      name: 'Codepen',
-      url: 'https://codepen.io/bchiang7',
+      name: 'Travel',
+      url: 'https://dereklarson.info',
     },
     {
       name: 'Instagram',
-      url: 'https://www.instagram.com/bchiang7',
+      url: 'https://www.instagram.com/larson.derek.a',
     },
     {
       name: 'Twitter',
-      url: 'https://twitter.com/bchiang7',
+      url: 'https://twitter.com/d6damage',
     },
   ],
 
@@ -34,7 +37,7 @@ module.exports = {
       url: '/#jobs',
     },
     {
-      name: 'Work',
+      name: 'Projects',
       url: '/#projects',
     },
     {
@@ -45,6 +48,7 @@ module.exports = {
 
   colors: {
     green: '#64ffda',
+    dlblue: '#2196F3',
     navy: '#0a192f',
     darkNavy: '#020c1b',
   },
