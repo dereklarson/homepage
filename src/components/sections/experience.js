@@ -6,7 +6,7 @@ import { srConfig } from '@config';
 import { KEY_CODES } from '@utils';
 import sr from '@utils/sr';
 
-const StyledJobsSection = styled.section`
+const StyledExperienceSection = styled.section`
   max-width: 700px;
 
   .inner {
@@ -140,7 +140,7 @@ const StyledTabContent = styled.div`
     font-size: var(--fz-xxl);
     font-weight: 500;
 
-    .company {
+    .organization {
       color: var(--primary);
     }
   }
@@ -153,18 +153,18 @@ const StyledTabContent = styled.div`
   }
 `;
 
-const Jobs = () => {
+const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
-      jobs: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/jobs/" } }
+      experience: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/experience/" } }
         sort: { fields: [frontmatter___date], order: DESC }
       ) {
         edges {
           node {
             frontmatter {
               title
-              company
+              organization
               location
               range
               url
@@ -176,7 +176,7 @@ const Jobs = () => {
     }
   `);
 
-  const jobsData = data.jobs.edges;
+  const experienceData = data.experience.edges;
 
   const [activeTabId, setActiveTabId] = useState(0);
   const [tabFocus, setTabFocus] = useState(null);
@@ -219,14 +219,14 @@ const Jobs = () => {
   };
 
   return (
-    <StyledJobsSection id="jobs" ref={revealContainer}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+    <StyledExperienceSection id="experience" ref={revealContainer}>
+      <h2 className="numbered-heading">Where I’ve Learned and Worked</h2>
 
       <div className="inner">
-        <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={onKeyDown}>
-          {jobsData &&
-            jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter;
+        <StyledTabList role="tablist" aria-label="Exp tabs" onKeyDown={onKeyDown}>
+          {experienceData &&
+            experienceData.map(({ node }, i) => {
+              const { tabtag, organization } = node.frontmatter;
               return (
                 <li key={i}>
                   <StyledTabButton
@@ -238,7 +238,7 @@ const Jobs = () => {
                     aria-selected={activeTabId === i ? true : false}
                     aria-controls={`panel-${i}`}
                     tabIndex={activeTabId === i ? '0' : '-1'}>
-                    <span>{company}</span>
+                    <span>{tabtag || organization}</span>
                   </StyledTabButton>
                 </li>
               );
@@ -246,10 +246,10 @@ const Jobs = () => {
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
 
-        {jobsData &&
-          jobsData.map(({ node }, i) => {
+        {experienceData &&
+          experienceData.map(({ node }, i) => {
             const { frontmatter, html } = node;
-            const { title, url, company, range } = frontmatter;
+            const { title, url, organization, range } = frontmatter;
 
             return (
               <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
@@ -262,10 +262,10 @@ const Jobs = () => {
                   hidden={activeTabId !== i}>
                   <h3>
                     <span>{title}</span>
-                    <span className="company">
+                    <span className="organization">
                       &nbsp;@&nbsp;
                       <a href={url} className="inline-link">
-                        {company}
+                        {organization}
                       </a>
                     </span>
                   </h3>
@@ -278,8 +278,8 @@ const Jobs = () => {
             );
           })}
       </div>
-    </StyledJobsSection>
+    </StyledExperienceSection>
   );
 };
 
-export default Jobs;
+export default Experience;

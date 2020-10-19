@@ -90,7 +90,7 @@ const StyledTableContainer = styled.div`
         line-height: 1.25;
       }
 
-      &.company {
+      &.organization {
         font-size: var(--fz-lg);
         white-space: nowrap;
       }
@@ -172,7 +172,7 @@ const ArchivePage = ({ location, data }) => {
                     android,
                     title,
                     tech,
-                    company,
+                    organization,
                   } = node.frontmatter;
                   return (
                     <tr key={i} ref={el => (revealProjects.current[i] = el)}>
@@ -180,8 +180,8 @@ const ArchivePage = ({ location, data }) => {
 
                       <td className="title">{title}</td>
 
-                      <td className="company hide-on-mobile">
-                        {company ? <span>{company}</span> : <span>—</span>}
+                      <td className="organization hide-on-mobile">
+                        {organization ? <span>{organization}</span> : <span>—</span>}
                       </td>
 
                       <td className="tech hide-on-mobile">
@@ -250,7 +250,7 @@ export const pageQuery = graphql`
             tech
             github
             external
-            company
+            organization
           }
           html
         }

@@ -81,8 +81,6 @@ const StyledPic = styled.div`
     .img {
       position: relative;
       border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
       transition: var(--transition);
     }
 
@@ -132,7 +130,14 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['Physics', 'Monte Carlo Simulation', 'Python', 'TensorFlow', 'React', 'Dash'];
+  const skills = [
+    'Physics',
+    'Monte Carlo Methods',
+    'Python',
+    'Machine Learning',
+    'React',
+    'Data Visualization',
+  ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -141,18 +146,22 @@ const About = () => {
       <div className="inner">
         <StyledText>
           <div>
-            <p> I'm Derek, occasional physicist, data scientist, developer...always curious.</p>
+            <p>
+              I present as an occasional physicist, data scientist, developer... always remaining
+              curious.
+            </p>
             <p>
               If I had to define a single goal that captures my reason for being, I would say
-              <i>to understand</i>. The natural laws, the history of humanity, and the means with
-              which to process information in general.
+              <i> to understand</i>. The natural laws, the history of humanity, the means of
+              uncovering truth, and the process of understanding itself are all common contemplative
+              companions.
             </p>
             <p>
-              My academic and work experience has taken me to California and back again, with a
-              posdoctoral appointment in Taipei.
+              Growing up in the US midwest, my academic and work experience has taken me to
+              California and back again, with a stopover for a posdoctoral appointment in Taipei.
             </p>
 
-            <p>Here are a few keywords describing where I've ventured:</p>
+            <p>Here are a few keywords describing where my career has ventured:</p>
           </div>
 
           <ul className="skills-list">

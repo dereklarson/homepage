@@ -47,13 +47,13 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>Welcome, my name is</h1>;
+  const one = <h1>My name is</h1>;
   const two = <h2 className="big-heading">Derek Larson</h2>;
   const three = <h3 className="big-heading">I seek, study, and showcase data</h3>;
   const four = (
     <p>
-      I'm a data scientist based in San Francisco with a broad set of skills ranging from science to
-      software.
+      I'm a data scientist based in San Francisco with a broad set of skills in software and the
+      sciences.
     </p>
   );
 
