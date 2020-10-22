@@ -139,31 +139,34 @@ const About = () => {
     'Data Visualization',
   ];
 
+  const text = [
+    `
+    I take the view that varied experiences bring out the best of humanity: fostering
+    creativity, bridging divides, and building intuition.
+    `,
+    `
+    An occasional physicist, data scientist, and developer, I always remain curious and
+    try to weave together my accumulated knowledge. When venturing into new territory--the
+    natural sciences, politics, algorithm design, music-- I live for the moments when
+    disparate patterns align: applying knowledge of phase transitions to social networks,
+    measuring the entropy of a Bach fugue, or intersecting democracy with data structures.
+    `,
+    `
+    Growing up in the US midwest, my academic and work experience has taken me to
+    California and back again, with a stopover for a posdoctoral appointment in Taipei.
+    `,
+    `
+    Here are a few keywords describing where my career has ventured:
+    `,
+  ];
+
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
       <h2 className="numbered-heading">About Me</h2>
 
       <div className="inner">
         <StyledText>
-          <div>
-            <p>
-              I present as an occasional physicist, data scientist, developer... always remaining
-              curious.
-            </p>
-            <p>
-              If I had to define a single goal that captures my reason for being, I would say
-              <i> to understand</i>. The natural laws, the history of humanity, the means of
-              uncovering truth, and the process of understanding itself are all common contemplative
-              companions.
-            </p>
-            <p>
-              Growing up in the US midwest, my academic and work experience has taken me to
-              California and back again, with a stopover for a posdoctoral appointment in Taipei.
-            </p>
-
-            <p>Here are a few keywords describing where my career has ventured:</p>
-          </div>
-
+          <div>{text && text.map((par, i) => <p key={i}>{par}</p>)}</div>
           <ul className="skills-list">
             {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
           </ul>

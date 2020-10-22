@@ -3,9 +3,6 @@ import Fonts from './fonts';
 import TransitionStyles from './TransitionStyles';
 import PrismStyles from './PrismStyles';
 
-// --green: #64ffda;
-const dlblue = '#2196F3';
-
 const GlobalStyle = createGlobalStyle`
   ${Fonts};
 
@@ -19,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     --light-slate: #a8b2d1;
     --lightest-slate: #ccd6f6;
     --white: #e6f1ff;
-    --primary: ${dlblue}
+    --primary: #2196F3;
     --primary-tint: rgba(100, 255, 218, 0.1);
 
     --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
