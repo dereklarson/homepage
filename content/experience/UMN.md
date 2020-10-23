@@ -1,10 +1,13 @@
 ---
-date: '1999-09-01'
+type: 'education'
+date: '2003-05-01'
+degree: 'B.S. Physics and Mathematics'
 title: 'Undergraduate Student'
 organization: 'University of Minnesota - Twin Cities'
 location: 'Minneapolis, MN'
 range: 'September 1999 - May 2003'
 url: 'https://twin-cities.umn.edu/'
+blocktype: 'bullets'
 ---
 
 - B.S. Physics

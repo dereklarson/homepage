@@ -1,4 +1,5 @@
 ---
+type: 'projects'
 show: True
 featured: True
 date: '2020-01-15'
@@ -10,6 +11,7 @@ tech:
   - React.js
   - Flask
   - Dagre
+blocktype: 'text'
 ---
 
 Aleph is a prototype graph-based UI. The fundamental principle: make a directed graph

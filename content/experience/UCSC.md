@@ -1,10 +1,13 @@
 ---
-date: '2003-09-01'
+type: 'education'
+date: '2009-06-01'
+degree: 'Ph.D. Physics'
 title: 'Graduate Student'
 organization: 'University of California - Santa Cruz'
 location: 'Santa Cruz, CA'
 range: 'September 2003 - June 2009'
 url: 'https://www.ucsc.edu/'
+blocktype: 'bullets'
 ---
 
 - Ph.D. Physics

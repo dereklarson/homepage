@@ -1,0 +1,75 @@
+{# ### Doc-level settings ### #}
+\documentclass[]{resume}
+\usepackage{fancyhdr}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+ 
+\rfoot{Page \thepage \hspace{1pt}}
+\begin{document}
+
+\lastupdated
+
+{# ## Title section ## #}
+
+\namesection{{ name }}{\urlstyle{same}
+    \href{ {{ homepage }}}{ {{ homepage }} }\\
+    {{ phone }} | \href{mailto:{{ email }} }{ {{ email }} }
+}
+
+{# ### Left Column, 1/3 of page width ### #}
+
+\begin{minipage}[t]{0.33\textwidth} 
+
+{# ## Education section ## #}
+\section{Education} 
+{% for edu in education %}
+\subsection{ {{ edu.organization }} }
+\descript{ {{ edu.degree }} }
+\location{ {{ edu.date }} | {{ edu.location }} }
+\sectionsep
+
+{% endfor %}
+
+{# ## Skills section ## #}
+\section{Skills}
+\subsection{Programming}
+\location{Over 5000 lines:}
+{% for skill in skills %}
+\textbullet{} {{ skill }}\\
+{% endfor %}
+\sectionsep
+
+{# ### Right Column, 2/3 of page width ### #}
+\end{minipage} 
+\hfill
+\begin{minipage}[t]{0.66\textwidth} 
+
+{# ## Experience section ## #}
+\section{Experience}
+
+{% for job in work %}
+\runsubsection{ {{ job.organization }} }
+\descript{| {{ job.title }} }
+\location{ {{ job.range }} | {{ job.location }} }
+\begin{tightemize}
+{% for item in job.content %}
+\item {{ item }} 
+{% endfor %}
+\end{tightemize}
+\sectionsep
+
+{% endfor %}
+
+{# ## Projects section ## #}
+\section{Projects}
+{% for piece in projects %}
+\runsubsection{ {{ piece.title }} }
+\descript{| {% for txt in piece.tech %}{{ txt }}  {% endfor %} }
+\location{ {{ piece.date }} }
+{{ piece.content }}
+\sectionsep
+
+{% endfor %}
+\end{minipage} 
+\end{document}  \documentclass[]{article}

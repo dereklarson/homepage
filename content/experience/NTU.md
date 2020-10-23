@@ -1,10 +1,12 @@
 ---
+type: 'work'
 date: '2010-02-01'
 title: 'Postdoctoral Researcher'
 organization: 'National Taiwan University'
 location: 'Taipei, Taiwan'
 range: 'February 2010 - October 2012'
 url: 'https://www.ntu.edu.tw/english/'
+blocktype: 'bullets'
 ---
 
 - Advisor: Prof. Ying-Jer Kao
