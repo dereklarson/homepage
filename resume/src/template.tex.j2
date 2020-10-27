@@ -1,20 +1,24 @@
 {# ### Doc-level settings ### #}
 \documentclass[]{resume}
 \usepackage{fancyhdr}
+\usepackage{amssymb}
  
+
 \pagestyle{fancy}
 \fancyhf{}
  
+
 \rfoot{Page \thepage \hspace{1pt}}
 \begin{document}
 
-\lastupdated
+\headerdetail{7}{\href{http://hp.dereklarson.info/printable_resume.pdf}{Printable version} }
+\headerdetail{155}{Last updated on \today}
 
 {# ## Title section ## #}
 
-\namesection{{ name }}{\urlstyle{same}
-    \href{ {{ homepage }}}{ {{ homepage }} }\\
-    {{ phone }} | \href{mailto:{{ email }} }{ {{ email }} }
+\namesection{{"{"}}{{ contact.name }}{{"}"}}{\urlstyle{same}
+    \href{{"{"}}{{ contact.homepage }}{{"}{"}}{{ contact.homepage }} }\\
+    {{ contact.phone }} | \href{mailto:{{ contact.email }} }{ {{ contact.email }} }
 }
 
 {# ### Left Column, 1/3 of page width ### #}
@@ -24,19 +28,34 @@
 {# ## Education section ## #}
 \section{Education} 
 {% for edu in education %}
-\subsection{ {{ edu.organization }} }
-\descript{ {{ edu.degree }} }
-\location{ {{ edu.date }} | {{ edu.location }} }
+\subsection{{"{"}}{{ edu.organization }}{{"}"}}
+\descript{{"{"}}{{ edu.degree }}{{"}"}}
+\location{{"{"}}{{ edu.date }} | {{ edu.location }}{{"}"}}
+{% if edu.thesis %}
+{{ edu.thesis.type }}: {{ edu.thesis.link }}
+{% endif %}
 \sectionsep
 
 {% endfor %}
 
 {# ## Skills section ## #}
 \section{Skills}
-\subsection{Programming}
-\location{Over 5000 lines:}
-{% for skill in skills %}
-\textbullet{} {{ skill }}\\
+{% for category, catlist in skills.categories.items() %}
+\subsection{{"{"}}{{ category }}{{"}"}}
+{% for skill in catlist %}
+\textbullet{} {{ skill.skill }} {{ skill.rating }}\\
+{% endfor %}
+\sectionsep
+{% endfor %}
+
+{# ## Interests section ## #}
+\section{Interests}
+{% for hobby in interests.interests %}
+{% if hobby.link %}
+\textbullet{} \href{{"{"}}{{ hobby.link }}{{"}"}}{{"{"}}{{ hobby.name }}{{"}"}}\\
+{% else %}
+\textbullet{} {{ hobby.name }}\\
+{% endif %}
 {% endfor %}
 \sectionsep
 
@@ -47,16 +66,26 @@
 
 {# ## Experience section ## #}
 \section{Experience}
-
 {% for job in work %}
-\runsubsection{ {{ job.organization }} }
-\descript{| {{ job.title }} }
-\location{ {{ job.range }} | {{ job.location }} }
-\begin{tightemize}
+\runsubsection{{"{"}}{{ job.organization }}{{"}"}}
+\descript{| {{ job.title }}{{"}"}}
+\location{{"{"}}{{ job.range }} | {{ job.location }}{{"}"}}
 {% for item in job.content %}
-\item {{ item }} 
-{% endfor %}
+\emph{{"{"}}{{ item.key or item }}{{"}"}}
+{% if item.key %}
+\begin{tightemize}{0.5cm}
+  {% for subitem in item.subitems %}
+\item[$\bullet$] {{ subitem }}
+  {% endfor %}
 \end{tightemize}
+{% endif %}
+{% endfor %}
+{% if job.alltitles %}\location{Roles held:}
+\begin{tightemize}{0.5cm}
+{% for role in job.alltitles %}
+\item[$\blacksquare$] \textbf{{"{"}}{{ role.role }}{{"}"}} ({{ role.length }})
+{% endfor %}
+\end{tightemize}{% endif %}
 \sectionsep
 
 {% endfor %}
@@ -64,9 +93,11 @@
 {# ## Projects section ## #}
 \section{Projects}
 {% for piece in projects %}
-\runsubsection{ {{ piece.title }} }
-\descript{| {% for txt in piece.tech %}{{ txt }}  {% endfor %} }
-\location{ {{ piece.date }} }
+\runsubsection{{"{"}}{{ piece.title }}{{"}"}}
+\descript{| {% for txt in piece.tech %} {{ txt }} {% endfor %}
+	  | \href{{"{"}}{{ piece.github }}{{"}"}}{\emph{Github} }
+}
+\location{{"{"}}{{ piece.date }}{{"}"}}
 {{ piece.content }}
 \sectionsep
 

@@ -1,5 +1,5 @@
-% Intro Options
-\ProvidesClass{deedy-resume}[2020/10/21 resume]
+%% Intro Options
+\ProvidesClass{resume}[2020/10/21 resume]
 \NeedsTeXFormat{LaTeX2e}
 \DeclareOption{print}{\def\@cv@print{}}
 \DeclareOption*{
@@ -8,95 +8,110 @@
 \ProcessOptions\relax
 \LoadClass{article}
 
-% Package Imports
+%% Package Imports
 \usepackage[hmargin=1.25cm, vmargin=0.7cm]{geometry}
 \usepackage[usenames,dvipsnames]{xcolor}
-\usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
 \usepackage[absolute]{textpos}
 \usepackage[UKenglish]{babel}
 \usepackage[UKenglish]{isodate}
 \usepackage{fontspec,xltxtra,xunicode}
+\usepackage{enumitem}                         % More itemize options
+\usepackage{fontspec}
+% From https://tex.stackexchange.com/questions/132888/fontawesome-font-not-found
+% Make sure to change the year if needed
+\defaultfontfeatures{Path = /usr/local/texlive/2020/texmf-dist/fonts/opentype/public/fontawesome/}
+\usepackage{fontawesome}                      % Adds many icons
+\usepackage[hidelinks]{hyperref}
+\usepackage{amssymb}
+\usepackage{stackengine}
+\usepackage{scalerel}
+\usepackage{xcolor}
+\usepackage{graphicx}
 
-% Cite publications
+%% Cite publications
 \usepackage{cite}
 \renewcommand\refname{\vskip -1.5cm}
 
-%% Color definitions
-% Dark backgound
-\definecolor{page}{HTML}{020c1b}
-% lightest slate
-\definecolor{date}{HTML}{ccd6f6} 
-% light-slate
-\definecolor{primary}{HTML}{a8b2d1} 
-% Primary color is based on theme (blue)
-\definecolor{headings}{HTML}{2196f3}
-% white
-\definecolor{subheadings}{HTML}{e6f1ff}
-% --navy: #0a192f;
-% --light-navy: #172a45;
-% --lightest-navy: #303C55;
-% --navy-shadow: rgba(2, 12, 27, 0.7);
-% --slate: #8892b0;
+%% Color definitions for the themes
+% Dark
+\definecolor{dark_page}{HTML}{020c1b}              % Dark backgound
+\definecolor{dark_date}{HTML}{a8b2d1}              % light-slate
+\definecolor{dark_primary}{HTML}{ccd6f6}           % lightest slate
+\definecolor{dark_heading}{HTML}{2196f3}           % Primary color is based on theme (blue)
+\definecolor{dark_subheading}{HTML}{e6f1ff}        % white
+% Light
+\definecolor{light_page}{HTML}{ffffff}             % White backgound
+\definecolor{light_date}{HTML}{666666}             % 
+\definecolor{light_primary}{HTML}{2b2b2b}          % 
+\definecolor{light_heading}{HTML}{6a6a6a}          % 
+\definecolor{light_subheading}{HTML}{333333}       % 
+
+{% for color in ['page', 'date', 'primary', 'heading', 'subheading'] %}
+\colorlet{{"{"}}{{ color }}{{"}"}}{{"{"}}{{ theme }}_{{ color }}{{"}"}}
+{% endfor %}
 \pagecolor{page}
 
-% Set main fonts
+{% raw %}
+%% Set main fonts
 \defaultfontfeatures{Mapping=tex-text}
 \setmainfont[Color=primary]{Helvetica Light}
 \setsansfont[Scale=MatchLowercase,Mapping=tex-text]{Helvetica Neue UltraLight}
 
-% Date command
+%% Add link icon to hyperlinks
+\let\orighref\href
+\renewcommand{\href}[2]{\orighref{#1}{#2\,\faExternalLink}}
+
+%% Header details: last updated printable (light themed) version of resume link
+% Args are left position and text to display
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
-\textblockorigin{0mm}{5mm} % start everyth
-\newcommand{\lastupdated}{\begin{textblock}{60}(155,0)
+\textblockorigin{0mm}{5mm}
+\newcommand{\headerdetail}[2]{\begin{textblock}{60}(#1,0)
 \color{date}\fontspec{Helvetica Neue Light}\fontsize{8pt}{10pt}\selectfont 
-Last Updated on
-\today
+#2
 \end{textblock}}
 
-\newcommand{\leftdetails}[1]{\begin{textblock}{60}(170,5)
-\color{date}\fontspec{Helvetica Neue Light}\fontsize{8pt}{10pt}\selectfont 
-#1
-\end{textblock}}
-
-
-% Name command
-\newcommand{\namesection}[3]{
+%% Name command
+\newcommand{\namesection}[2]{
 	\centering{
 		\sffamily
-		\fontspec{Helvetica Neue UltraLight}\fontsize{40pt}{10cm}\selectfont #1 
-		\fontspec{Helvetica Neue Light}\selectfont #2
+		\fontspec{Helvetica Neue Light}\fontsize{40pt}{10cm}\selectfont #1 
 	} \\
 	\vspace{5pt}
-	\centering{ \color{headings}\fontspec{Heiti TC Medium}\fontsize{11pt}{14pt}\selectfont #3}
+	\centering{ \color{heading}\fontspec{Heiti TC Medium}\fontsize{11pt}{14pt}\selectfont #2}
 	\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
 	\vspace{-15pt}
 }
 \titlespacing{\section}{0pt}{0pt}{0pt}
 
-% Headings command
-\titleformat{\section}{\color{headings}
-\scshape\fontspec{Helvetica Light}\fontsize{16pt}{24pt}\selectfont \raggedright\uppercase}{} {0em}{}
+%% Headings command
+\titleformat{\section}{
+	\color{heading}\scshape\fontspec{Helvetica Light}
+	\fontsize{16pt}{24pt}\selectfont \raggedright\uppercase}{}{0em}{}
 
-% Subeadings command
-\titleformat{\subsection}{\color{subheadings}
-\fontspec{Helvetica}\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase}{}{0em}{}
+%% Subheadings command
+\titleformat{\subsection}{
+	\color{subheading}
+	\fontspec{Helvetica}\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase}{}{0em}{}
 \titlespacing{\subsection}{0pt}{\parskip}{-\parskip}
 \titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
-\newcommand{\runsubsection}[1]{\color{subheadings}
-\fontspec{Helvetica}\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase {#1} \normalfont}
+\newcommand{\runsubsection}[1]{
+	\color{subheading}\fontspec{Helvetica}
+	\fontsize{12pt}{12pt}\selectfont\bfseries\uppercase {#1} \normalfont}
 
-% Descriptors command
-\newcommand{\descript}[1]{\color{subheadings}\raggedright\scshape\fontspec{Heiti SC Medium}\fontsize{11pt}{13pt}\selectfont {#1 \\} \normalfont}
+%% Descriptors command
+\newcommand{\descript}[1]{\color{subheading}\raggedright\scshape\fontspec{Heiti SC Medium}\fontsize{11pt}{13pt}\selectfont {#1 \\} \normalfont}
 
-% Location command
-\newcommand{\location}[1]{\color{headings}\raggedright\scshape\fontspec{Heiti TC Medium}\fontsize{10pt}{12pt}\selectfont {#1\\} \normalfont}
+%% Location command
+\newcommand{\location}[1]{\color{heading}\raggedright\scshape\fontspec{Heiti TC Medium}\fontsize{10pt}{12pt}\selectfont {#1\\} \normalfont}
 
-% Section seperators command
+%% Section seperators command
 \newcommand{\sectionsep}[0]{\vspace{8pt}}
 
-% Bullet Lists with fewer gaps command
-\newenvironment{tightemize}{\vspace{-\topsep}\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt}{\end{itemize}\vspace{-\topsep}}
+%% Bullet Lists with fewer gaps command
+\newenvironment{tightemize}[1]{
+ 	\begin{itemize}[leftmargin=#1, topsep=2pt, parsep=0pt, itemsep=0pt, partopsep=0pt]
+	}{\end{itemize}}
 
-
+{% endraw %}

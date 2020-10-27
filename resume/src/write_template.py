@@ -1,5 +1,8 @@
+import copy
+import dateutil.parser
 import glob
-import logging
+import os
+import re
 import yaml
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
@@ -11,63 +14,108 @@ def md2yaml(text):
     into the name of a key that describes the remaining content, and checking a bit
     the nature of the content (bullets or plaintext)
     """
-    output = []
-    frontmatter = 0
+    # First convert hrefs to latex versions
+    text = href_html2tex(text)
+    # We'll place the frontmatter directly into our output variable
+    output, markdown, mode = split_frontmatter(text)
+    if mode == "text":
+        replacement = "\\%"  # Can't include backslash in f-string
+        output.extend([f"    {line.replace('%', replacement)}" for line in markdown])
+        return "\n".join(output)
+    elif mode != "bullets":
+        print("Unsupported markdown processing mode")
+        return output
+
+    listbuffer = None
+    for line in markdown:
+        if line.startswith("- "):
+            if listbuffer:
+                output.append(listbuffer)
+            listbuffer = line
+            continue
+        # Only go up to 2 levels for bullets
+        elif listbuffer:
+            if line.startswith("  - "):
+                output.append(listbuffer.replace("- ", "- key: "))
+                output.append("  subitems:")
+            else:
+                output.append(listbuffer)
+            listbuffer = None
+        output.append(line)
+    return "\n".join([line.replace("%", "\\%") for line in output])
+
+
+def href_html2tex(link):
+    """Converts html links to Latex links"""
+    link = link.replace("\n", "^%")
+    matcher = r'<a href=[\'"]?([^\'" >]+)[\'"]?.*?>(<\w+>)*([^<>"]+).*?</a>'
+    texfmt = r"\\href{\1}{\\textcolor{heading}{\\textbf{\3}}}"
+    output = re.sub(matcher, texfmt, link)
+    return output.replace("^%", "\n")
+
+
+def split_frontmatter(text):
+    """Separates the frontmatter (between '---') and determines the text mode"""
+    frontmatter = []
+    markdown = []
+    curr = None
     mode = None
     for line in text.split("\n"):
         if line.startswith("---"):
-            if not frontmatter:
-                output.append(line)
-            else:
-                modetag = " |" if mode == "text" else ""
-                output.append(f"content:{modetag}")
-            frontmatter += 1
+            curr = frontmatter if not frontmatter else markdown
+            continue
         elif "blocktype:" in line:
             mode = "bullets" if "bullets" in line else "text"
-        elif frontmatter >= 2:
-            if "<a" in line or "</a>" in line:
-                # Skip hyperlinks
-                continue
-            elif line.startswith(" - "):
-                output.append(line)
-            else:
-                output.append(f"    {line}")
-        else:
-            output.append(line)
-    return "\n".join(output)
+            continue
+        if curr is not None:
+            curr.append(line)
+    # This leads into the markdown material, specifying block text with a pipe if needed
+    modetag = " |" if mode == "text" else ""
+    frontmatter.append(f"content:{modetag}")
+    return frontmatter, markdown, mode
 
 
 def load_markdowns_rec(path):
+    print(f"Grabbing markdown content from {path}")
     output = defaultdict(list)
     for filename in glob.glob(f"{path}/**/*.md"):
         try:
-            logging.warning(f"loading {filename}")
+            print(f"  loading {filename}")
             with open(filename, "r") as fh:
-                text = fh.read()
-                yaml_str = md2yaml(text)
-                if "Aleph" in filename:
-                    print(yaml_str)
+                yaml_str = md2yaml(fh.read())
                 loaded = yaml.load(yaml_str, Loader=yaml.Loader)
                 output[loaded["type"]].append(loaded)
         except IOError as exc:
-            logging.warning("Couldn't load {}".format(filename))
-            logging.warning(exc)
+            print("Couldn't load {}".format(filename))
+            print(exc)
 
     return output
 
 
-def get_context():
-    context = load_markdowns_rec("../content")
-    context.update(
-        {
-            "name": "{Derek}{Larson}",
-            "phone": "415-792-7219",
-            "email": "larson.derek.a@gmail.com",
-            "homepage": "dereklarson.info",
-            "skills": ["Python", "MonteCarlo", "Stats",],
-        }
-    )
-    return context
+def post_process_context(context):
+    output = copy.deepcopy(context)
+    # Personal, Interests, Skills assume one entry
+    output["contact"] = output["contact"][0]
+    output["interests"] = output["interests"][0]
+    output["skills"] = output["skills"][0]
+
+    # Skills: add the stars
+    for catlist in output["skills"]["categories"].values():
+        for item in catlist:
+            filled_stars = "\\bigstar" * int(item["rating"])
+            item["rating"] = f"${filled_stars}$"
+
+    # Reformat dates and sort for each case
+    for content_type in ["education", "work", "projects"]:
+        output[content_type] = sorted(
+            output[content_type], key=lambda x: x["date"], reverse=True
+        )
+        for item in output[content_type]:
+            item["date"] = dateutil.parser.parse(item["date"]).strftime("%B %Y")
+
+    return output
+
+    return proc_context
 
 
 def write_template(template, context, output_location):
@@ -83,5 +131,15 @@ def write_template(template, context, output_location):
 
 
 if __name__ == "__main__":
-    context = get_context()
-    write_template("template.tex.j2", context, "build/out_template.xtx")
+    # Modify these as needed
+    markdown_path = "../content"
+    template_file = "template.tex.j2"
+    output = "build/template_output.xtx"
+    cls_template_file = "resume.cls"
+
+    # Loads all markdown files recursively from markdown_path
+    context = load_markdowns_rec(markdown_path)
+    proc_context = post_process_context(context)
+    write_template(template_file, proc_context, output)
+    write_template(cls_template_file, {"theme": "dark"}, "build/resume.cls")
+    write_template(cls_template_file, {"theme": "light"}, "build/light_resume.cls")

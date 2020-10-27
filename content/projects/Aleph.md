@@ -16,4 +16,5 @@ blocktype: 'text'
 
 Aleph is a prototype graph-based UI. The fundamental principle: make a directed graph
 the centerpiece of the user experience, allowing a better visual and contextual
-interaction for many engineering tasks.
+interaction for many engineering tasks. Imagine interacting with a (live) data pipeline
+in this fashion.
