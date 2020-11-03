@@ -54,15 +54,34 @@
 \sectionsep
 {% endfor %}
 
-{# ## Interests section ## #}
-\section{Interests}
-{% for hobby in interests.interests %}
-{% if hobby.link %}
-\textbullet{} \href{{"{"}}{{ hobby.link }}{{"}"}}{{"{"}}{{ hobby.name }}{{"}"}}\\
+{# ## Competitions/Awards section ## #}
+\section{Competitions}
+\begin{tightemize}{0.5cm}
+{% for event in competition %}
+{% if event.url %}
+\item[$\bullet$] \href{{"{"}}{{ event.url }}{{"}"}}{{"{"}}{{ event.title }}{{"}"}}
+\begin{tightemize}{0.2cm}
+\item {{ event.note }}\\
+\item Rank: {{ event.rank }}\\
+\end{tightemize}
 {% else %}
-\textbullet{} {{ hobby.name }}\\
+\item[$\bullet$] {{ event.title }}\\
 {% endif %}
 {% endfor %}
+\end{tightemize}
+\sectionsep
+
+{# ## Interests section ## #}
+\section{Interests}
+\begin{tightemize}{0.5cm}
+{% for hobby in interests.interests %}
+{% if hobby.link %}
+\item[$\bullet$] \href{{"{"}}{{ hobby.link }}{{"}"}}{{"{"}}{{ hobby.name }}{{"}"}}\\
+{% else %}
+\item[$\bullet$] {{ hobby.name }}\\
+{% endif %}
+{% endfor %}
+\end{tightemize}
 \sectionsep
 
 {# ### Right Column, 2/3 of page width ### #}

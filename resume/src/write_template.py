@@ -42,7 +42,7 @@ def md2yaml(text):
                 output.append(listbuffer)
             listbuffer = None
         # Fix special characters for LateX
-        line = line.replace("%", "\\%").replace("$", "\\$") 
+        line = line.replace("%", "\\%").replace("$", "\$") 
         output.append(line)
     return "\n".join([line for line in output])
 
