@@ -4,6 +4,7 @@ categories:
   languages:
     - skill: 'Python'
       rating: 5
+      keywords: 'Pandas, Numpy, SKLearn'
     - skill: 'StandardSQL'
       rating: 3
     - skill: 'JS (React)'
@@ -20,6 +21,7 @@ categories:
   academic:
     - skill: 'Machine Learning'
       rating: 5
+      keywords: 'XGBoost, Deep Learning'
     - skill: 'Monte Carlo Methods'
       rating: 5
     - skill: 'Statistics'

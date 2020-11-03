@@ -15,7 +15,7 @@ module.exports = {
     },
     {
       name: 'Travel',
-      url: 'https://dereklarson.info',
+      url: 'https://travel.dereklarson.info',
     },
     {
       name: 'Instagram',

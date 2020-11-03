@@ -1,3 +1,4 @@
+gatsby build
 rm -rf build
 mkdir build
 cp -r public src static build/

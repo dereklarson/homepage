@@ -11,11 +11,10 @@
 \rfoot{Page \thepage \hspace{1pt}}
 \begin{document}
 
-\headerdetail{7}{\href{http://hp.dereklarson.info/printable_resume.pdf}{Printable version} }
+\headerdetail{7}{\href{http://{{ contact.homepage }}/printable_resume.pdf}{Printable version} }
 \headerdetail{155}{Last updated on \today}
 
 {# ## Title section ## #}
-
 \namesection{{"{"}}{{ contact.name }}{{"}"}}{\urlstyle{same}
     \href{{"{"}}{{ contact.homepage }}{{"}{"}}{{ contact.homepage }} }\\
     {{ contact.phone }} | \href{mailto:{{ contact.email }} }{ {{ contact.email }} }
@@ -42,9 +41,16 @@
 \section{Skills}
 {% for category, catlist in skills.categories.items() %}
 \subsection{{"{"}}{{ category }}{{"}"}}
+\begin{tightemize}{0.5cm}
 {% for skill in catlist %}
-\textbullet{} {{ skill.skill }} {{ skill.rating }}\\
+\item[$\bullet$] {{ skill.skill }} {{ skill.rating }}\\
+{% if skill.keywords %}
+\begin{tightemize}{0.2cm}
+\item {{ skill.keywords }}
+\end{tightemize}
+{% endif %}
 {% endfor %}
+\end{tightemize}
 \sectionsep
 {% endfor %}
 

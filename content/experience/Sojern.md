@@ -5,7 +5,7 @@ date: '2015-02-28'
 title: 'Manager of Data Science Engineering'
 alltitles:
   - role: 'Manager of Data Science Engineering'
-    length: '1 year'
+    length: '1 year, 1 hire, 1-5 reports'
   - role: 'Staff Data Science Engineer'
     length: '6 months'
   - role: 'Lead Data Science Engineer'
@@ -25,10 +25,10 @@ blocktype: 'bullets'
   - Our A/B tests demonstrated 25% cost reduction across enterprise clients
   - Improved pipeline efficiency 1000x (it didn't start very efficient ;)
 - Automated Optimization System for Enterprise Ad Campaigns
-  - Supplies daily performance adjustments and provide alerts and insights
+  - Predicts and adjusts performance, provides alerts and insights
   - I led the engineering effort as primary designer and developer
-  - Deployed to 95% of campaigns and improved key metrics 3x vs human control
+  - Managed \$100M of spend and outperformed humans by 3x on KPIs
 - Platform for dynamically creating and managing custom advertising audiences
   - Allows users to specify their own audience logic with 1-click deployment
-  - I pitched the project, developed a custom metalanguage and built the backend
+  - I pitched the project, designed a metalanguage and built the backend
   - Freed up 2-3 full-time engineers from coding the same audiences manually

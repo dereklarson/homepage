@@ -4,7 +4,7 @@ date: '2009-06-01'
 degree: 'Ph.D. Physics'
 thesis:
   type: 'Dissertation'
-  link: <a href="hp.dereklarson.info/dissertation.pdf">Monte Carlo Studies of Disordered Spin Systems</a>
+  link: <a href="dereklarson.info/dissertation.pdf">Monte Carlo Studies of Disordered Spin Systems</a>
 title: 'Graduate Student'
 organization: 'Univ. of CA - Santa Cruz'
 advisor: 'Prof. Peter Young'

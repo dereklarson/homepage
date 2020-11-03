@@ -41,8 +41,10 @@ def md2yaml(text):
             else:
                 output.append(listbuffer)
             listbuffer = None
+        # Fix special characters for LateX
+        line = line.replace("%", "\\%").replace("$", "\\$") 
         output.append(line)
-    return "\n".join([line.replace("%", "\\%") for line in output])
+    return "\n".join([line for line in output])
 
 
 def href_html2tex(link):
